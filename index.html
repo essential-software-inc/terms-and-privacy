@@ -25,7 +25,7 @@
   em { color:var(--muted); font-size:.85rem; }
   a { color:var(--accent); }
   /* [2026-11-07 10:49 | terms-fab-top] changed: the floating button is now one compact capsule: a small up arrow (shows after scrolling) joined to the Privacy / Terms jump. */
-  .fabs { position:fixed; right:1.1rem; bottom:calc(1.1rem + env(safe-area-inset-bottom, 0px)); display:inline-flex; align-items:stretch; border-radius:999px; background:var(--accent); color:#fff; overflow:hidden; box-shadow:0 2px 6px rgba(28,28,26,.18), 0 6px 16px rgba(28,28,26,.16); -webkit-tap-highlight-color:transparent; }
+  .fabs { position:fixed; right:1.1rem; bottom:calc(1.1rem + env(safe-area-inset-bottom, 0px)); transform-origin:calc(100% + 1.1rem) calc(100% + 1.1rem + env(safe-area-inset-bottom, 0px)); transform:translate(var(--zx,0px),var(--zy,0px)) scale(var(--zs,1)); z-index:10; display:inline-flex; align-items:stretch; border-radius:999px; background:var(--accent); color:#fff; overflow:hidden; box-shadow:0 2px 6px rgba(28,28,26,.18), 0 6px 16px rgba(28,28,26,.16); -webkit-tap-highlight-color:transparent; }
   .fab, .fab-top { display:inline-flex; align-items:center; color:#fff; text-decoration:none; font-size:.9rem; font-weight:600; -webkit-tap-highlight-color:transparent; }
   .fab { gap:.5rem; padding:.8rem 1.15rem; }
   .fab-top { padding:.8rem .8rem .8rem 1rem; border-right:1px solid rgba(255,255,255,.35); }
@@ -46,7 +46,7 @@
     </div>
     <p class="publisher">Essential Software</p>
     <h1>Bluebook Privacy Policy &amp; Terms of Service</h1>
-    <p class="jump"><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Service</a></p>
+    <p class="jump"><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Service</a><a href="#delete-account">Delete your account</a></p>
   </header>
 
   <h2 class="part" id="privacy">Privacy Policy</h2>
@@ -243,28 +243,54 @@
       <p>We may update these terms from time to time. If you keep using the app after changes are posted, you're accepting the revised terms.</p>
       <h2>Contact</h2>
       <p>Questions about these terms? We're happy to help at <a href="mailto:essentialsoftware.support@gmail.com">essentialsoftware.support@gmail.com</a>.</p>
+
+  <!-- [2026-11-08 05:20 | delete-account] updated to the same words as the Worker /legal page (LEGAL_PAGE_DELETE), including Delete some of your data. The Privacy and Terms text above is unchanged. -->
+  <h2 class="part" id="delete-account">Delete Your Account</h2>
+      <p>You can delete your Bluebook account at any time. You can do it in the app, or ask us to do it if you don't have the app any more. You can also delete only some of your data, further down.</p>
+      <h2>In the app</h2>
+      <p>Open Bluebook, tap the account icon, choose Show more, then tap Delete account. That signs this device out and starts the deletion.</p>
+      <h2>If you don't have the app</h2>
+      <p>Email us at <a href="mailto:essentialsoftware.support@gmail.com">essentialsoftware.support@gmail.com</a> from the email address of the Google account you signed in with, and say you want your account deleted. We may ask you a question to check it's you. Then we'll start the deletion for you.</p>
+      <h2>What happens next</h2>
+      <p>Your account is deleted 30 days after you ask. It can take up to a day longer. If you deleted it in the app and change your mind in that time, sign back in with the same Google account and the deletion is cancelled. If you asked us by email, write to us at the same address. Until the 30 days are up, your published pages and stories stay online.</p>
+      <p>When it happens, we permanently delete your account and your backup (your synced notes, images, voice notes and playlists), your display name and profile picture, your ads and their statistics, your page space and ad view balances, your invites, your alerts and your team memberships. We also take down every page you published.</p>
+      <h2>What we keep</h2>
+      <p>In team chats, your text messages stay for the team, with your name taken off. We keep a copy of each page you published for about 30 more days, in case of an abuse report or takedown request. We also keep a simple daily record of which days an account was active, with no name, email or content, for about 26 months. Google and RevenueCat hold your purchase records, and their own policies cover that. The <a href="#privacy">Privacy Policy</a> has the full list.</p>
+      <h2>Delete some of your data</h2>
+      <p>You don't have to delete your whole account to remove some of your data. In the app you can unpublish a page or a story, delete your own comments, take back your likes and subscriptions, remove an ad, and remove an editor from a page you share. Unpublishing takes the page off its public link.</p>
+      <p>For anything else, such as your activity history, purchase records, images or voice notes, email us at <a href="mailto:essentialsoftware.support@gmail.com">essentialsoftware.support@gmail.com</a> from the email address of the Google account you signed in with. Tell us what you want removed and we'll reply to you. We may need to keep a few records, such as the daily record of which days an account was active, where we need them to keep the service safe or to follow the law.</p>
 </main>
 <!-- [2026-11-07 10:49 | terms-fab-top] Floating capsule: Back to top (after scrolling) + the Privacy / Terms jump. -->
 <div class="fabs"><a class="fab-top" id="fab-top" href="#top" aria-label="Back to top" hidden><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></a><a class="fab" id="fab" href="#terms" aria-label="Go to Terms"><span id="fab-label">Terms</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
 <script>
+// [2026-11-08 05:30 | terms-fab-top] changed: the button cycles Privacy, Terms, Delete account and back (three states), and holds its size when pinch-zoomed, the same as the /legal page on the Worker.
 (function () {
-  var fab = document.getElementById('fab'), top = document.getElementById('fab-top'), label = document.getElementById('fab-label'),
-      terms = document.getElementById('terms'), inTerms = null, queued = false;
-  function update() {
-    queued = false;
-    top.hidden = window.scrollY < window.innerHeight * 0.6;
-    var atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    var now = terms.getBoundingClientRect().top <= window.innerHeight * 0.35 || atEnd;
-    if (now === inTerms) return;
-    inTerms = now;
-    fab.href = now ? '#privacy' : '#terms';
-    label.textContent = now ? 'Privacy' : 'Terms';
-    fab.setAttribute('aria-label', 'Go to ' + label.textContent);
+  var f = document.querySelector('.fabs'), fab = document.getElementById('fab'), top = document.getElementById('fab-top'), label = document.getElementById('fab-label'),
+      v = window.visualViewport, d = document.documentElement, q = 0,
+      ids = ['privacy', 'terms', 'delete-account'], names = ['Privacy', 'Terms', 'Delete account'];
+  function section() {
+    var h = window.innerHeight * 0.35, c = 0, i;
+    for (i = 0; i < ids.length; i++) { if (document.getElementById(ids[i]).getBoundingClientRect().top <= h) c = i; }
+    if (window.innerHeight + window.scrollY >= d.scrollHeight - 4) c = ids.length - 1;
+    return c;
   }
+  function update() {
+    q = 0;
+    var n = (section() + 1) % ids.length, s = f.style;
+    label.textContent = names[n];
+    fab.href = '#' + ids[n];
+    fab.setAttribute('aria-label', 'Go to ' + names[n]);
+    top.hidden = window.scrollY < window.innerHeight * 0.6;
+    if (!v || Math.abs(v.scale - 1) < 0.01) { s.removeProperty('--zx'); s.removeProperty('--zy'); s.removeProperty('--zs'); return; }
+    s.setProperty('--zx', (v.offsetLeft + v.width - d.clientWidth) + 'px');
+    s.setProperty('--zy', (v.offsetTop + v.height - d.clientHeight) + 'px');
+    s.setProperty('--zs', 1 / v.scale);
+  }
+  function queue() { if (!q) q = requestAnimationFrame(update); }
   top.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0 }); });
-  function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', queue, { passive: true });
   window.addEventListener('resize', queue);
+  if (v) { v.addEventListener('resize', queue); v.addEventListener('scroll', queue); }
   update();
 })();
 </script>
